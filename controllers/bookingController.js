@@ -22,8 +22,7 @@ exports.getCheckoutSessions = catchAsync(async (req, res, next) => {
             name: `${tour.name} Tour`,
             description: tour.summary,
             images: [
-              // `http://127.0.0.1:3000/api/v1/img/tours/${tour.imageCover}`,
-              `https://i.pinimg.com/736x/19/10/f6/1910f65ba79885c13eb6ce6db74ad8f2.jpg`,
+              `https://booking-app-inky-eight.vercel.app/img/tours/${tour.imageCover}`,
             ],
           },
         },
