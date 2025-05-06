@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
+const compression = require('compression');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
@@ -52,10 +53,7 @@ app.use(
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'http:', 'https:'],
         connectSrc: ["'self'", 'ws:', 'wss:', 'http:', 'https:'],
-        frameSrc: [
-          "'self'",
-          'https://js.stripe.com',
-        ],
+        frameSrc: ["'self'", 'https://js.stripe.com'],
         workerSrc: ["'self'", 'blob:'],
       },
     },
@@ -92,9 +90,11 @@ app.use(
   })
 );
 
-app.get('/bundle.js.map', (req, res) => {
-  res.status(404).send('Not found');
-});
+app.use(compression());
+
+// app.get('/bundle.js.map', (req, res) => {
+//   res.status(404).send('Not found');
+// });
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

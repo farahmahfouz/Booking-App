@@ -9,12 +9,10 @@ const stripePromise = loadStripe(
 export const bookTour = async (tourId) => {
   try {
     const session = await axios(
-      `http://127.0.0.1:3000/api/v1/booking/checkout-session/${tourId}`
+      `/api/v1/booking/checkout-session/${tourId}`
     );
 
-    console.log('Before redirect');
     window.location.href = session.data.session.url;
-    console.log('After redirect');
     const stripe = await stripePromise;
     if (!stripe) {
       throw new Error('Stripe failed to load.');
